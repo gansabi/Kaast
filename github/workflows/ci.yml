@@ -1,3 +1,11 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 stages:
   - install
   - lint
@@ -99,14 +107,13 @@ deploy_staging:
   needs:
     - build_backend
     - build_frontend
-
-deploy_production:
-  stage: deploy
-deploy_staging:
-  stage: deploy
-  script:
-    - echo "Déploiement production à configurer"
-  needs:
-    - build_backend
-    - build_frontend
+# deploy_production:
+#   stage: deploy
+# deploy_staging:
+#   stage: deploy
+#   script:
+#     - echo "Déploiement production à configurer"
+#   needs:
+#     - build_backend
+#     - build_frontend
 

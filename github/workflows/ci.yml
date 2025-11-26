@@ -1,0 +1,112 @@
+stages:
+  - install
+  - lint
+  - test
+  - build
+  - deploy
+
+# ============================
+# INSTALLATION
+# ============================
+
+install_backend:
+  stage: install
+  image: node:18
+  script:
+    - cd back
+    - npm ci
+  artifacts:
+    paths:
+      - back/node_modules/
+
+install_frontend:
+  stage: install
+  image: node:18
+  script:
+    - cd front
+    - echo "Installation des dépendances frontend à configurer"
+  #   - npm ci
+  # artifacts:
+  #   paths:
+  #     - front/node_modules/
+
+# ============================
+# LINT
+# ============================
+
+lint_backend:
+  stage: lint
+  image: node:18
+  script:
+    - cd back
+    - npm run lint || echo "Erreurs ESLint Frontend détectées"
+    - npx prettier --check . || echo "Fichiers Frontend non formatés"
+
+lint_frontend:
+  stage: lint
+  image: node:18
+  script:
+    - cd front
+    - echo "Linting frontend à configurer"
+    # - npm run lint || echo "Erreurs ESLint Frontend détectées"
+    # - npx prettier --check . || echo "Fichiers Frontend non formatés"
+
+# ============================
+# TEST
+# ============================
+
+test_backend:
+  stage: test
+  image: node:18
+  script:
+    - cd back
+    - echo "Tests backend à configurer"
+
+# ============================
+# BUILD
+# ============================
+
+build_backend:
+  stage: build
+  image: node:18
+  script:
+    - cd back
+    - echo "Build backend à configurer"
+  #   - npm run build
+  # artifacts:
+  #   paths:
+  #     - back/dist/
+
+build_frontend:
+  stage: build
+  image: node:18
+  script:
+    - cd front
+    - echo "Build frontend à configurer"
+  #   - npm run build
+  # artifacts:
+  #   paths:
+  #     - front/dist/
+
+# ============================
+# DEPLOY (vide pour l'instant)
+# ============================
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Déploiement staging à configurer"
+  needs:
+    - build_backend
+    - build_frontend
+
+deploy_production:
+  stage: deploy
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Déploiement production à configurer"
+  needs:
+    - build_backend
+    - build_frontend
+
